@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Себестоимость продуктов · Маркетинговое агентство в Ташкенте</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .doc-section {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-section:last-child { border-bottom: none; }
+    .doc-section h2 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .doc-section p {
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg-card);
+      box-shadow: var(--shadow-sm);
+      margin-top: 16px;
+      margin-bottom: 24px;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 720px;
+    }
+    .data-table thead th {
+      background: var(--bg-soft);
+      text-align: left;
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 600;
+      padding: 14px 14px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+    }
+    .data-table tbody th {
+      text-align: left;
+      padding: 12px 14px;
+      color: var(--text);
+      font-weight: 600;
+      background: var(--bg-card);
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .data-table tbody td {
+      padding: 12px 14px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 13px;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+    #summary .data-table tbody td {
+      white-space: normal;
+    }
+    .data-table tbody tr.row-total th,
+    .data-table tbody tr.row-total td {
+      background: rgba(249, 115, 22, 0.06);
+      color: var(--text);
+      font-weight: 600;
+    }
+    .data-table tbody tr.row-margin th,
+    .data-table tbody tr.row-margin td {
+      background: rgba(249, 115, 22, 0.12);
+      color: var(--text);
+      font-weight: 700;
+    }
+    .data-table tbody tr.row-price th,
+    .data-table tbody tr.row-price td {
+      background: var(--bg-soft);
+      color: var(--text);
+      font-weight: 700;
+    }
+    .data-table tbody tr:last-child th,
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .data-table tbody tr:hover td {
+      background: rgba(249, 115, 22, 0.04);
+    }
+    .doc-header {
+      padding: 36px 0 24px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(249, 115, 22, 0.04) 0%, transparent 100%);
+    }
+    .doc-header .eyebrow {
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .doc-header h1 {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      max-width: 800px;
+      color: var(--text);
+    }
+    .doc-header .meta {
+      margin-top: 16px;
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    .doc-header .meta strong {
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+<section class="doc-section" id="disclaimer">
+  <div class="container">
+    <div style="background: rgba(249, 115, 22, 0.08); border: 1px solid var(--accent-line); border-radius: 12px; padding: 20px 24px;">
+      <p style="margin: 0; color: var(--text); font-weight: 600; font-size: 14px;">Что НЕ учтено в этой модели</p>
+      <p style="margin-top: 8px; color: var(--text-muted); font-size: 14px;">Маржа в таблицах ниже это валовая маржа агентства до налогов и операционных расходов. В цифрах не учтены: налоги УЗ (упрощёнка 4% или общий режим с НДС 12% и налогом на прибыль 15%), бухгалтер на аутсорсе, банковские комиссии, курсовые потери при конвертациях руб-сум-USD, резервный фонд агентства. Чистая прибыль для распределения дивидендов будет ниже указанной маржи.</p>
+    </div>
+  </div>
+</section>
+
+<section class="doc-section" id="rates">
+  <div class="container">
+    <h2>Базовые ставки команды</h2>
+    <p>Все ставки на один проект.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Статья</th>
+            <th>Руб</th>
+            <th>USD</th>
+            <th>Сум</th>
+            <th>Что это, на каких продуктах</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>Таргетолог Meta</th><td>20 000/мес</td><td>$267/мес</td><td>3.3 млн/мес</td><td>Запуск и ведение Facebook + Instagram. Performance Light, Standard.</td></tr>
+          <tr><th>Контекстолог Google</th><td>20 000/мес</td><td>$267/мес</td><td>3.3 млн/мес</td><td>Запуск и ведение Google Ads. Performance Standard.</td></tr>
+          <tr><th>Аккаунт-менеджер</th><td>20 000/мес</td><td>$267/мес</td><td>3.3 млн/мес</td><td>Билингвист рус-узб удалённо. Совмещает функции аккаунт-менеджера и проджект-менеджера. Один аккаунт-менеджер ведёт 3 проекта. Стоимость указана как доля на один проект.</td></tr>
+          <tr><th>Roistat установка</th><td>65 000 разово</td><td>$867 разово</td><td>10.8 млн разово</td><td>Один раз на проекте: настройка сквозной аналитики. Только Performance месяц 1.</td></tr>
+          <tr><th>Roistat докрутка</th><td>25 000/мес</td><td>$333/мес</td><td>4.2 млн/мес</td><td>Регулярная поддержка специалистом. Со 2-го месяца Performance.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="doc-section" id="performance">
+  <div class="container">
+    <h2>Таблица 1. Performance под ключ</h2>
+    <p>Жизненный цикл клиента Performance:</p>
+    <ul style="list-style: none; padding-left: 0; margin-bottom: 16px;">
+      <li style="padding-left: 16px; position: relative; margin-bottom: 6px; color: var(--text-muted);"><span style="color: var(--accent); font-weight: 800; position: absolute; left: 4px; font-size: 18px; line-height: 1;">·</span><strong>Месяц 1: Запуск.</strong> Настройка Roistat, запуск кампаний. Цена 250К руб (включает разовую установку Roistat).</li>
+      <li style="padding-left: 16px; position: relative; margin-bottom: 6px; color: var(--text-muted);"><span style="color: var(--accent); font-weight: 800; position: absolute; left: 4px; font-size: 18px; line-height: 1;">·</span><strong>Месяцы 2-3: Стабилизация.</strong> Оптимизация кампаний после запуска. Цена 250К/мес. Это обязательная часть стартового контракта.</li>
+      <li style="padding-left: 16px; position: relative; margin-bottom: 6px; color: var(--text-muted);"><span style="color: var(--accent); font-weight: 800; position: absolute; left: 4px; font-size: 18px; line-height: 1;">·</span><strong>Месяц 4+: Сопровождение.</strong> Цена 150К/мес. Один канал рекламы (Meta или Google), Roistat, аккаунт-менеджер. Это долгосрочный тариф под УЗ-рынок.</li>
+    </ul>
+    <p>Гонорары Алмаза и Ширин на Performance: <strong>по 10% каждому (20% суммарно)</strong>. На остальных продуктах остаются по 15%.</p>
+    <p>Все цифры в формате: <strong>руб / USD / сум</strong>.</p>
+    <div class="table-wrap">
+      <table class="data-table" style="min-width: 900px">
+        <thead>
+          <tr>
+            <th>Статья</th>
+            <th>Месяц 1: Запуск</th>
+            <th>Месяцы 2-3: Стабилизация</th>
+            <th>Месяц 4+: Сопровождение</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-price">
+            <th>Цена клиенту</th>
+            <td>250К / $3 333 / 41.7 млн</td>
+            <td>250К/мес / $3 333 / 41.7 млн</td>
+            <td>150К/мес / $2 000 / 25 млн</td>
+          </tr>
+          <tr><th>Roistat установка</th><td>65К / $867 / 10.8 млн</td><td>-</td><td>-</td></tr>
+          <tr><th>Roistat докрутка</th><td>-</td><td>25К / $333 / 4.2 млн</td><td>25К / $333 / 4.2 млн</td></tr>
+          <tr><th>Таргетолог Meta</th><td>20К / $267 / 3.3 млн</td><td>20К / $267 / 3.3 млн</td><td>20К / $267 / 3.3 млн (1 канал на выбор)</td></tr>
+          <tr><th>Контекстолог Google</th><td>20К / $267 / 3.3 млн</td><td>20К / $267 / 3.3 млн</td><td>-</td></tr>
+          <tr><th>Аккаунт-менеджер</th><td>20К / $267 / 3.3 млн</td><td>20К / $267 / 3.3 млн</td><td>20К / $267 / 3.3 млн</td></tr>
+          <tr><th>Гонорар Алмаза 10%</th><td>25К / $333 / 4.2 млн</td><td>25К / $333 / 4.2 млн</td><td>15К / $200 / 2.5 млн</td></tr>
+          <tr><th>Гонорар Ширин 10%</th><td>25К / $333 / 4.2 млн</td><td>25К / $333 / 4.2 млн</td><td>15К / $200 / 2.5 млн</td></tr>
+          <tr class="row-total"><th>Итого себестоимость</th><td>175К / $2 333 / 29.2 млн</td><td>135К / $1 800 / 22.5 млн</td><td>95К / $1 267 / 15.8 млн</td></tr>
+          <tr class="row-margin"><th>Маржа агентства</th><td>75К / $1 000 / 12.5 млн</td><td>115К / $1 533 / 19.2 млн</td><td>55К / $733 / 9.2 млн</td></tr>
+          <tr class="row-margin"><th>Маржа %</th><td>30%</td><td>46%</td><td>37%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="doc-section" id="consulting">
+  <div class="container">
+    <h2>Таблица 2. Консультационные продукты</h2>
+    <div class="table-wrap">
+      <table class="data-table" style="min-width: 1100px">
+        <thead>
+          <tr>
+            <th>Статья</th>
+            <th>Диагностика</th>
+            <th>Корп. интенсив 200К</th>
+            <th>Корп. интенсив 300К</th>
+            <th>Корп. сопровождение</th>
+            <th>Стратсессия 200К</th>
+            <th>Стратсессия 250К</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-price">
+            <th>Цена клиенту</th>
+            <td>100К разово / $1 333 / 16.7 млн</td>
+            <td>200К разово / $2 667 / 33.3 млн</td>
+            <td>300К разово / $4 000 / 50 млн</td>
+            <td>130К/мес / $1 733 / 21.7 млн</td>
+            <td>200К разово / $2 667 / 33.3 млн</td>
+            <td>250К разово / $3 333 / 41.7 млн</td>
+          </tr>
+          <tr><th>Гонорар Алмаза 15%</th><td>15К / $200 / 2.5 млн</td><td>30К / $400 / 5 млн</td><td>45К / $600 / 7.5 млн</td><td>19.5К / $260 / 3.25 млн</td><td>30К / $400 / 5 млн</td><td>37.5К / $500 / 6.3 млн</td></tr>
+          <tr><th>Гонорар Ширин 15%</th><td>15К / $200 / 2.5 млн</td><td>30К / $400 / 5 млн</td><td>45К / $600 / 7.5 млн</td><td>19.5К / $260 / 3.25 млн</td><td>30К / $400 / 5 млн</td><td>37.5К / $500 / 6.3 млн</td></tr>
+          <tr class="row-total"><th>Итого себестоимость</th><td>30К / $400 / 5 млн</td><td>60К / $800 / 10 млн</td><td>90К / $1 200 / 15 млн</td><td>39К / $520 / 6.5 млн</td><td>60К / $800 / 10 млн</td><td>75К / $1 000 / 12.5 млн</td></tr>
+          <tr class="row-margin"><th>Маржа агентства</th><td>70К / $933 / 11.7 млн</td><td>140К / $1 867 / 23.3 млн</td><td>210К / $2 800 / 35 млн</td><td>91К / $1 213 / 15.2 млн</td><td>140К / $1 867 / 23.3 млн</td><td>175К / $2 333 / 29.2 млн</td></tr>
+          <tr class="row-margin"><th>Маржа %</th><td>70%</td><td>70%</td><td>70%</td><td>70%</td><td>70%</td><td>70%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="doc-section" id="audit-tracking">
+  <div class="container">
+    <h2>Таблица 3. Аудит + Трекинг маркетинга (12 месяцев)</h2>
+    <p>Алмаз и Ширин ведут лично.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Статья</th>
+            <th>Месяц 1 (Аудит + Дорожная карта)</th>
+            <th>Месяцы 2-12 (Трекинг при 100К)</th>
+            <th>Месяцы 2-12 (Трекинг при 150К)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-price">
+            <th>Цена клиенту</th>
+            <td>250К разово / $3 333 / 41.7 млн</td>
+            <td>100К/мес / $1 333 / 16.7 млн</td>
+            <td>150К/мес / $2 000 / 25 млн</td>
+          </tr>
+          <tr><th>Гонорар Алмаза 15%</th><td>37.5К / $500 / 6.3 млн</td><td>15К / $200 / 2.5 млн</td><td>22.5К / $300 / 3.75 млн</td></tr>
+          <tr><th>Гонорар Ширин 15%</th><td>37.5К / $500 / 6.3 млн</td><td>15К / $200 / 2.5 млн</td><td>22.5К / $300 / 3.75 млн</td></tr>
+          <tr class="row-total"><th>Итого себестоимость</th><td>75К / $1 000 / 12.5 млн</td><td>30К / $400 / 5 млн</td><td>45К / $600 / 7.5 млн</td></tr>
+          <tr class="row-margin"><th>Маржа агентства</th><td>175К / $2 333 / 29.2 млн</td><td>70К / $933 / 11.7 млн</td><td>105К / $1 400 / 17.5 млн</td></tr>
+          <tr class="row-margin"><th>Маржа %</th><td>70%</td><td>70%</td><td>70%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="doc-section" id="summary">
+  <div class="container">
+    <h2>Сводная подробная таблица всех продуктов</h2>
+    <p>В колонке «Состав себестоимости» расписаны все статьи с суммами.</p>
+    <div class="table-wrap">
+      <table class="data-table" style="min-width: 1100px">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Продукт</th>
+            <th>Цена</th>
+            <th>Состав себестоимости</th>
+            <th>Итого себестоимость</th>
+            <th>Маржа</th>
+            <th>%</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>1</th>
+            <td>Диагностика</td>
+            <td>100К руб<br>$1 333<br>16.7 млн сум</td>
+            <td>Гонорар Алмаза 15К<br>Гонорар Ширин 15К</td>
+            <td>30К руб<br>$400<br>5 млн сум</td>
+            <td>70К руб<br>$933<br>11.7 млн сум</td>
+            <td>70%</td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>Performance, Месяц 1: Запуск</td>
+            <td>250К руб<br>$3 333<br>41.7 млн сум</td>
+            <td>Roistat установка 65К<br>Таргетолог Meta 20К<br>Контекстолог Google 20К<br>Аккаунт-менеджер 20К<br>Гонорар Алмаза 25К (10%)<br>Гонорар Ширин 25К (10%)</td>
+            <td>175К руб<br>$2 333<br>29.2 млн сум</td>
+            <td>75К руб<br>$1 000<br>12.5 млн сум</td>
+            <td>30%</td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>Performance, Месяцы 2-3: Стабилизация</td>
+            <td>250К/мес<br>$3 333/мес<br>41.7 млн/мес</td>
+            <td>Roistat докрутка 25К<br>Таргетолог Meta 20К<br>Контекстолог Google 20К<br>Аккаунт-менеджер 20К<br>Гонорар Алмаза 25К (10%)<br>Гонорар Ширин 25К (10%)</td>
+            <td>135К/мес<br>$1 800<br>22.5 млн</td>
+            <td>115К/мес<br>$1 533<br>19.2 млн</td>
+            <td>46%</td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>Performance, Месяц 4+: Сопровождение</td>
+            <td>150К/мес<br>$2 000/мес<br>25 млн/мес</td>
+            <td>Roistat докрутка 25К<br>Таргетолог 1 канал 20К<br>Аккаунт-менеджер 20К<br>Гонорар Алмаза 15К (10%)<br>Гонорар Ширин 15К (10%)</td>
+            <td>95К/мес<br>$1 267<br>15.8 млн</td>
+            <td>55К/мес<br>$733<br>9.2 млн</td>
+            <td>37%</td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>Корп. интенсив 2 дня (200К)</td>
+            <td>200К разово<br>$2 667<br>33.3 млн</td>
+            <td>Гонорар Алмаза 30К<br>Гонорар Ширин 30К</td>
+            <td>60К<br>$800<br>10 млн</td>
+            <td>140К<br>$1 867<br>23.3 млн</td>
+            <td>70%</td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>Корп. интенсив 2 дня (300К)</td>
+            <td>300К разово<br>$4 000<br>50 млн</td>
+            <td>Гонорар Алмаза 45К<br>Гонорар Ширин 45К</td>
+            <td>90К<br>$1 200<br>15 млн</td>
+            <td>210К<br>$2 800<br>35 млн</td>
+            <td>70%</td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>Корп. сопровождение</td>
+            <td>130К/мес<br>$1 733/мес<br>21.7 млн/мес</td>
+            <td>Гонорар Алмаза 19.5К<br>Гонорар Ширин 19.5К</td>
+            <td>39К/мес<br>$520<br>6.5 млн</td>
+            <td>91К/мес<br>$1 213<br>15.2 млн</td>
+            <td>70%</td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>Стратсессия (200К)</td>
+            <td>200К разово<br>$2 667<br>33.3 млн</td>
+            <td>Гонорар Алмаза 30К<br>Гонорар Ширин 30К</td>
+            <td>60К<br>$800<br>10 млн</td>
+            <td>140К<br>$1 867<br>23.3 млн</td>
+            <td>70%</td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>Стратсессия (250К)</td>
+            <td>250К разово<br>$3 333<br>41.7 млн</td>
+            <td>Гонорар Алмаза 37.5К<br>Гонорар Ширин 37.5К</td>
+            <td>75К<br>$1 000<br>12.5 млн</td>
+            <td>175К<br>$2 333<br>29.2 млн</td>
+            <td>70%</td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td>Аудит + Трекинг мес 1</td>
+            <td>250К разово<br>$3 333<br>41.7 млн</td>
+            <td>Гонорар Алмаза 37.5К<br>Гонорар Ширин 37.5К</td>
+            <td>75К<br>$1 000<br>12.5 млн</td>
+            <td>175К<br>$2 333<br>29.2 млн</td>
+            <td>70%</td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td>Аудит + Трекинг мес 2-12 (100К)</td>
+            <td>100К/мес<br>$1 333/мес<br>16.7 млн/мес</td>
+            <td>Гонорар Алмаза 15К<br>Гонорар Ширин 15К</td>
+            <td>30К/мес<br>$400<br>5 млн</td>
+            <td>70К/мес<br>$933<br>11.7 млн</td>
+            <td>70%</td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td>Аудит + Трекинг мес 2-12 (150К)</td>
+            <td>150К/мес<br>$2 000/мес<br>25 млн/мес</td>
+            <td>Гонорар Алмаза 22.5К<br>Гонорар Ширин 22.5К</td>
+            <td>45К/мес<br>$600<br>7.5 млн</td>
+            <td>105К/мес<br>$1 400<br>17.5 млн</td>
+            <td>70%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
