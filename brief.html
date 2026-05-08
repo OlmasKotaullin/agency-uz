@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Анкета · Performance под ключ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .doc-header {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(249, 115, 22, 0.04) 0%, transparent 100%);
+    }
+    .doc-header .eyebrow {
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .doc-header h1 {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      max-width: 800px;
+      color: var(--text);
+    }
+    .doc-header .lead {
+      margin-top: 16px;
+      max-width: 720px;
+      color: var(--text-muted);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    .form-section {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-section:last-of-type { border-bottom: none; }
+    .form-section h2 {
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .form-section .step-label {
+      font-family: 'JetBrains Mono', 'SF Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .form-section .section-hint {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .field {
+      margin-bottom: 20px;
+    }
+    .field label {
+      display: block;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .field .hint {
+      color: var(--text-dim);
+      font-size: 13px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="tel"],
+    .field input[type="url"],
+    .field input[type="number"],
+    .field textarea,
+    .field select {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      box-sizing: border-box;
+    }
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+    }
+    .field textarea {
+      resize: vertical;
+      min-height: 80px;
+      font-family: inherit;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+    .checkbox-group label:hover {
+      border-color: var(--accent-line);
+    }
+    .checkbox-group input[type="checkbox"] {
+      accent-color: var(--accent);
+    }
+    .actions {
+      padding: 32px 0 64px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .actions button {
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      letter-spacing: -0.01em;
+    }
+    .actions button:hover {
+      background: #ea6a13;
+      transform: translateY(-1px);
+    }
+    .actions button.secondary {
+      background: var(--bg-card);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .actions button.secondary:hover {
+      background: var(--bg-soft);
+      border-color: var(--border-strong);
+    }
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--text);
+      color: var(--bg);
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      opacity: 0;
+      transition: all 0.25s ease;
+      pointer-events: none;
+      box-shadow: var(--shadow-md);
+      z-index: 100;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 700px) {
+      .row-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="container">
+    <div class="eyebrow">Анкета клиента · Performance под ключ</div>
+    <h1>Бриф на запуск performance-маркетинга</h1>
+    <p class="lead">Заполните анкету, чтобы мы могли подготовить персональное предложение и план запуска. На каждый блок 5-10 минут. Поля необязательные, заполняйте что знаете. В конце нажмите «Скопировать ответы» и пришлите нам в Telegram или WhatsApp.</p>
+  </div>
+</header>
+
+<form id="brief-form">
+
+<section class="form-section">
+  <div class="container">
+    <div class="step-label">Шаг 1 из 7</div>
+    <h2>О компании</h2>
+    <p class="section-hint">Базовая информация о бизнесе.</p>
+
+    <div class="field">
+      <label>Название компании</label>
+      <input type="text" name="company_name" placeholder="ООО «Название»">
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Сфера деятельности / ниша</label>
+        <input type="text" name="niche" placeholder="Например: производство мебели, частная медицина, недвижимость">
+      </div>
+      <div class="field">
+        <label>Год основания</label>
+        <input type="number" name="founded" placeholder="2018">
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Регион работы</label>
+        <input type="text" name="region" placeholder="Узбекистан / Ташкент / СНГ">
+      </div>
+      <div class="field">
+        <label>Численность сотрудников</label>
+        <input type="text" name="employees" placeholder="15-25 человек">
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Сайт</label>
+        <input type="url" name="website" placeholder="https://example.uz">
+      </div>
+      <div class="field">
+        <label>Соцсети</label>
+        <input type="text" name="socials" placeholder="Instagram, Telegram, Facebook">
+      </div>
+    </div>
+    <div class="field">
+      <label>Краткое описание бизнеса</label>
+      <p class="hint">Расскажите своими словами: чем занимаетесь, как давно, в чём отличие.</p>
+      <textarea name="description" rows="4"></textarea>
+    </div>
+  </div>
+</section>
+
+<section class="form-section">
+  <div class="container">
+    <div class="step-label">Шаг 2 из 7</div>
+    <h2>Продукт и юнит-экономика</h2>
+    <p class="section-hint">Что вы продаёте и как зарабатываете.</p>
+
+    <div class="field">
+      <label>Что продаёте (продукты или услуги)</label>
+      <p class="hint">Перечислите 3-5 основных позиций.</p>
+      <textarea name="products" rows="3"></textarea>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Средний чек</label>
+        <input type="text" name="avg_check" placeholder="500 000 сум / $40 / 3 000 руб">
+      </div>
+      <div class="field">
+        <label>Маржинальность сделки</label>
+        <input type="text" name="margin" placeholder="35-40%">
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Цикл сделки</label>
+        <p class="hint">От первого контакта до оплаты.</p>
+        <input type="text" name="sales_cycle" placeholder="3-7 дней / 1 месяц / 3 месяца">
+      </div>
+      <div class="field">
+        <label>LTV клиента</label>
+        <p class="hint">Сколько клиент тратит за всё время сотрудничества.</p>
+        <input type="text" name="ltv" placeholder="500 000 сум за 12 месяцев">
+      </div>
+    </div>
+    <div class="field">
+      <label>Сезонность</label>
+      <p class="hint">Когда пик продаж, когда спад. Учитываете ли Рамадан, школьный сезон, Навруз.</p>
+      <textarea name="seasonality" rows="2"></textarea>
+    </div>
+    <div class="field">
+      <label>Уникальное торговое предложение</label>
+      <p class="hint">Почему клиенты выбирают вас, а не конкурентов.</p>
+      <textarea name="usp" rows="3"></textarea>
+    </div>
+  </div>
+</section>
+
+<section class="form-section">
+  <div class="container">
+    <div class="step-label">Шаг 3 из 7</div>
+    <h2>Целевая аудитория</h2>
+    <p class="section-hint">Кому продаёте.</p>
+
+    <div class="field">
+      <label>Основная ЦА (1-2 главных сегмента)</label>
+      <p class="hint">География, пол, возраст, уровень дохода, чем занимаются.</p>
+      <textarea name="audience" rows="3"></textarea>
+    </div>
+    <div class="field">
+      <label>Боли и потребности клиента</label>
+      <p class="hint">Какую проблему решает ваш продукт.</p>
+      <textarea name="pains" rows="3"></textarea>
+    </div>
+    <div class="field">
+      <label>Главные возражения и страхи</label>
+      <p class="hint">Что мешает клиенту купить, что слышали от потенциальных клиентов.</p>
+      <textarea name="objections" rows="3"></textarea>
+    </div>
+  </div>
+</section>
+
+<section class="form-section">
+  <div class="container">
+    <div class="step-label">Шаг 4 из 7</div>
+    <h2>Текущий маркетинг</h2>
+    <p class="section-hint">Что делаете сейчас и какие результаты.</p>
+
+    <div class="field">
+      <label>Какие каналы рекламы используете сейчас</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="channels" value="Instagram"> Instagram</label>
+        <label><input type="checkbox" name="channels" value="Facebook"> Facebook</label>
+        <label><input type="checkbox" name="channels" value="Google Ads"> Google Ads</label>
+        <label><input type="checkbox" name="channels" value="Yandex Direct"> Yandex Direct</label>
+        <label><input type="checkbox" name="channels" value="Telegram Ads"> Telegram Ads</label>
+        <label><input type="checkbox" name="channels" value="my.uz"> my.uz</label>
+        <label><input type="checkbox" name="channels" value="OLX"> OLX</label>
+        <label><input type="checkbox" name="channels" value="SEO"> SEO</label>
+        <label><input type="checkbox" name="channels" value="Сарафан"> Сарафан</label>
+        <label><input type="checkbox" name="channels" value="Офлайн реклама"> Офлайн</label>
+        <label><input type="checkbox" name="channels" value="Другое"> Другое</label>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Текущий бюджет на рекламу/мес</label>
+        <input type="text" name="budget_now" placeholder="50 млн сум / $4 000 / 300 000 руб">
+      </div>
+      <div class="field">
+        <label>Планируемый бюджет на performance/мес</label>
+        <input type="text" name="budget_planned" placeholder="80-100 млн сум">
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Сколько заявок получаете в месяц</label>
+        <input type="text" name="leads_per_month" placeholder="120-150 заявок">
+      </div>
+      <div class="field">
+        <label>Конверсия заявки в продажу</label>
+        <input type="text" name="conversion" placeholder="20%">
+      </div>
+    </div>
+    <div class="field">
+      <label>Кто сейчас занимается маркетингом</label>
+      <p class="hint">Штатный маркетолог, фрилансеры, агентство, сами.</p>
+      <textarea name="who_does_marketing" rows="2"></textarea>
+    </div>
+    <div class="field">
+      <label>Что НЕ работало в прошлых рекламных активностях</label>
+      <p class="hint">Какие подрядчики, какие каналы, какие подходы оказались неудачными.</p>
+      <textarea name="what_failed" rows="3"></textarea>
+    </div>
+  </div>
+</section>
+
+<section class="form-section">
+  <div class="container">
+    <div class="step-label">Шаг 5 из 7</div>
+    <h2>Конкуренты</h2>
+    <p class="section-hint">Кого считаете конкурентами и чем отличаетесь.</p>
+
+    <div class="field">
+      <label>3-5 главных прямых конкурентов</label>
+      <p class="hint">Названия компаний и их сайты или соцсети.</p>
+      <textarea name="competitors" rows="4"></textarea>
+    </div>
+    <div class="field">
+      <label>Чем вы лучше них</label>
+      <p class="hint">Ваше преимущество, в чём сильнее.</p>
+      <textarea name="advantages" rows="3"></textarea>
+    </div>
+  </div>
+</section>
+
+<section class="form-section">
+  <div class="container">
+    <div class="step-label">Шаг 6 из 7</div>
+    <h2>Цели и техническая база</h2>
+    <p class="section-hint">Чего хотим и что у вас есть.</p>
+
+    <div class="field">
+      <label>Цель на 3 месяца</label>
+      <p class="hint">Что должно произойти, чтобы вы были довольны результатом первого квартала.</p>
+      <textarea name="goal_3m" rows="2"></textarea>
+    </div>
+    <div class="field">
+      <label>Цель на 12 месяцев</label>
+      <p class="hint">Стратегическая цель на год: выручка, рост, доля рынка.</p>
+      <textarea name="goal_12m" rows="2"></textarea>
+    </div>
+    <div class="field">
+      <label>Ключевые метрики, которые важны</label>
+      <p class="hint">Что вы будете считать главным показателем успеха: количество лидов, CPA, ROAS, выручка от рекламы.</p>
+      <textarea name="kpi" rows="2"></textarea>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Сайт: на чём сделан</label>
+        <input type="text" name="site_platform" placeholder="Tilda / Bitrix / WordPress / кастом">
+      </div>
+      <div class="field">
+        <label>CRM используете?</label>
+        <input type="text" name="crm" placeholder="amoCRM / Bitrix24 / нет">
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Аналитика стоит?</label>
+        <input type="text" name="analytics" placeholder="Google Analytics, Yandex Metrica, Roistat, нет">
+      </div>
+      <div class="field">
+        <label>Готовы передать доступы к рекламным кабинетам</label>
+        <input type="text" name="ad_access" placeholder="Да / нет / частично">
+      </div>
+    </div>
+    <div class="field">
+      <label>Что есть из креативов и контента</label>
+      <p class="hint">Профессиональные фото, видео, тексты, логотип, брендбук, посадки.</p>
+      <textarea name="assets" rows="3"></textarea>
+    </div>
+  </div>
+</section>
+
+<section class="form-section">
+  <div class="container">
+    <div class="step-label">Шаг 7 из 7</div>
+    <h2>Контакты</h2>
+    <p class="section-hint">С кем мы будем общаться.</p>
+
+    <div class="row-2">
+      <div class="field">
+        <label>Имя и должность</label>
+        <input type="text" name="contact_name" placeholder="Хуршид Мирзаев, собственник">
+      </div>
+      <div class="field">
+        <label>Кто принимает финальное решение</label>
+        <input type="text" name="decision_maker" placeholder="Я / собственник / совет директоров">
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Удобный способ связи</label>
+        <input type="text" name="contact_channel" placeholder="WhatsApp / Telegram / звонок">
+      </div>
+      <div class="field">
+        <label>Телефон</label>
+        <input type="tel" name="phone" placeholder="+998 90 123 45 67">
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field">
+        <label>Telegram / WhatsApp</label>
+        <input type="text" name="messenger" placeholder="@username или номер">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="director@company.uz">
+      </div>
+    </div>
+    <div class="field">
+      <label>Удобное время для звонка</label>
+      <input type="text" name="call_time" placeholder="Будни 10:00-14:00 по Ташкенту">
+    </div>
+    <div class="field">
+      <label>Когда хотите запустить работу</label>
+      <input type="text" name="start_date" placeholder="Через 2 недели / в течение месяца">
+    </div>
+    <div class="field">
+      <label>Что-то ещё, что нам важно знать</label>
+      <textarea name="notes" rows="3"></textarea>
+    </div>
+  </div>
+</section>
+
+<section class="form-section">
+  <div class="container actions">
+    <button type="button" id="copy-btn">Скопировать ответы</button>
+    <button type="button" class="secondary" id="reset-btn">Очистить форму</button>
+  </div>
+</section>
+
+</form>
+
+<div class="toast" id="toast">Ответы скопированы. Вставьте в Telegram или WhatsApp.</div>
+
+<script>
+  const form = document.getElementById('brief-form');
+  const copyBtn = document.getElementById('copy-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const toast = document.getElementById('toast');
+
+  const sectionTitles = {
+    1: 'О компании',
+    2: 'Продукт и юнит-экономика',
+    3: 'Целевая аудитория',
+    4: 'Текущий маркетинг',
+    5: 'Конкуренты',
+    6: 'Цели и техническая база',
+    7: 'Контакты'
+  };
+
+  function showToast(text) {
+    toast.textContent = text;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2400);
+  }
+
+  function buildAnswers() {
+    const sections = document.querySelectorAll('.form-section');
+    const lines = ['Анкета на Performance под ключ', '═══════════════════════════', ''];
+
+    sections.forEach(sec => {
+      if (sec.classList.contains('actions')) return;
+      const stepLabel = sec.querySelector('.step-label');
+      const heading = sec.querySelector('h2');
+      if (!heading) return;
+
+      lines.push('▶ ' + heading.textContent);
+      lines.push('');
+
+      const fields = sec.querySelectorAll('.field');
+      fields.forEach(field => {
+        const label = field.querySelector('label');
+        const inputs = field.querySelectorAll('input, textarea, select');
+
+        if (inputs[0] && inputs[0].type === 'checkbox') {
+          const values = [...inputs].filter(i => i.checked).map(i => i.value);
+          if (values.length) {
+            lines.push(label.textContent.trim() + ': ' + values.join(', '));
+          }
+          return;
+        }
+
+        const input = inputs[0];
+        if (!input) return;
+        const value = input.value.trim();
+        if (value) {
+          const labelText = label ? label.textContent.trim() : '';
+          if (input.tagName === 'TEXTAREA' || value.length > 60) {
+            lines.push(labelText + ':');
+            lines.push(value);
+          } else {
+            lines.push(labelText + ': ' + value);
+          }
+        }
+      });
+      lines.push('');
+    });
+
+    return lines.join('\n');
+  }
+
+  copyBtn.addEventListener('click', async () => {
+    const text = buildAnswers();
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast('Ответы скопированы. Вставьте в Telegram или WhatsApp.');
+    } catch (err) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('Ответы скопированы.');
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    if (confirm('Очистить все поля?')) {
+      form.reset();
+    }
+  });
+</script>
+
+</body>
+</html>
