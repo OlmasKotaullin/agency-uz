@@ -139,8 +139,8 @@
 <section class="doc-section" id="disclaimer">
   <div class="container">
     <div style="background: rgba(249, 115, 22, 0.08); border: 1px solid var(--accent-line); border-radius: 12px; padding: 20px 24px;">
-      <p style="margin: 0; color: var(--text); font-weight: 600; font-size: 14px;">Что НЕ учтено в этой модели</p>
-      <p style="margin-top: 8px; color: var(--text-muted); font-size: 14px;">Маржа в таблицах ниже это валовая маржа агентства до налогов и операционных расходов. В цифрах не учтены: налоги УЗ (упрощёнка 4% или общий режим с НДС 12% и налогом на прибыль 15%), бухгалтер на аутсорсе, банковские комиссии, курсовые потери при конвертациях руб-сум-USD, резервный фонд агентства. Чистая прибыль для распределения дивидендов будет ниже указанной маржи.</p>
+      <p style="margin: 0; color: var(--text); font-weight: 600; font-size: 14px;">Что НЕ учтено в себестоимости продуктов</p>
+      <p style="margin-top: 8px; color: var(--text-muted); font-size: 14px;">Маржа в таблицах ниже это валовая маржа агентства по продукту. Из неё ещё съедаются постоянные расходы агентства (см. блок «Постоянные расходы» в конце документа): бухгалтерия, налоги УЗ, банковские комиссии, курсовые потери при конвертациях, резервный фонд. Чистая прибыль для распределения дивидендов будет ниже указанной маржи продуктов.</p>
     </div>
   </div>
 </section>
@@ -420,6 +420,35 @@
         </tbody>
       </table>
     </div>
+  </div>
+</section>
+
+<section class="doc-section" id="overhead">
+  <div class="container">
+    <h2>Постоянные расходы агентства</h2>
+    <p>Эти расходы не закладываются в себестоимость отдельного продукта. Они съедают часть общей маржи агентства, прежде чем чистая прибыль распределится по партнёрским долям 30/30/40.</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Статья</th>
+            <th>Руб</th>
+            <th>USD</th>
+            <th>Сум</th>
+            <th>Что входит</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>Бухгалтерия</th><td>22 500/мес</td><td>$300/мес</td><td>3.75 млн/мес</td><td>Отчётность, налоги, платежи, расчёт зарплат</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:16px;"><strong>Также пока не учтены</strong> (нужно уточнить с местным налоговым консультантом и бухгалтером):</p>
+    <ul style="list-style: none; padding-left: 0;">
+      <li style="padding-left: 16px; position: relative; margin-bottom: 6px; color: var(--text-muted);"><span style="color: var(--accent); font-weight: 800; position: absolute; left: 4px; font-size: 18px; line-height: 1;">·</span><strong>Налоги УЗ:</strong> упрощёнка 4% от оборота (до 1 млрд сум/год) или общий режим (НДС 12% + налог на прибыль 15%).</li>
+      <li style="padding-left: 16px; position: relative; margin-bottom: 6px; color: var(--text-muted);"><span style="color: var(--accent); font-weight: 800; position: absolute; left: 4px; font-size: 18px; line-height: 1;">·</span><strong>Банковские комиссии</strong> и курсовые потери при конвертациях руб-сум-USD.</li>
+      <li style="padding-left: 16px; position: relative; margin-bottom: 6px; color: var(--text-muted);"><span style="color: var(--accent); font-weight: 800; position: absolute; left: 4px; font-size: 18px; line-height: 1;">·</span><strong>Резервный фонд агентства</strong> (на кассовые разрывы и просрочки клиентов).</li>
+    </ul>
   </div>
 </section>
 
